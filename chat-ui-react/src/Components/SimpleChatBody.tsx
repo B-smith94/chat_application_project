@@ -31,17 +31,23 @@ const ChatProvider: React.FC<ChatProviderProps> = ({ socket }) => {
         >
             <h2>Chat Room</h2>
             <p>Logged in as: {userID}</p>
-            {messages.map((message: Message, index: any) => (
+            {messages.map((message: Message, index: any) => {
+                const currentdate = new Date();
+                return (
                 <Card key={index} className="mb-2">
-                    <Card.Body>
+                    <Card.Body className="p-0">
                         <Card.Text style={{
                          color: message.userId === userID ? 'blue' : 'green',
                          float: message.userId === userID ? 'left' : 'right'}}>
                             {message.userId} - {message.text}
                          </Card.Text>
+                         <Card.Text style={{ float: message.userId === userID ? 'right' : 'left'}}>Posted at {currentdate.toLocaleString([], {
+                            hour: "2-digit",
+                            minute: "2-digit"
+                         })}</Card.Text>
                     </Card.Body>
                 </Card>
-            ))}
+            )})}
         </Container>
     );
 };
