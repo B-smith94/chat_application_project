@@ -18,7 +18,12 @@ const ChatProvider: React.FC<ChatProviderProps> = ({ socket, filter }) => {
 
     useEffect(() => {
         socket.on('message', (message: Message) => {
-            setMessages([...messages, message]);
+            try {
+                setMessages([...messages, message]);
+            } catch(error) {
+                alert(`An error occurred while recieving a message: ${error}`)
+                console.log("An error occurred when recieving messages:", error)
+            }
         });
     }, [socket, messages, userID]);
 

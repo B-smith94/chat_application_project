@@ -19,6 +19,14 @@ function App() {
     socket.on("disconnect", () => {
       console.log("Disconnected from server");
     });
+
+    socket.on("connect_error", (err) => {
+      console.error("Connection error:", err);
+      alert("Failed to connect to the server. Please try again later.")
+      });
+    
+    socket.off("connect_error");
+    
   }, []);
 
   return (

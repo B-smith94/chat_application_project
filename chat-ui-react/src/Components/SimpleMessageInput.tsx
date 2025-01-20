@@ -12,8 +12,18 @@ const MessageInput: React.FC<MessageInputProps> = ({ socket }) => {
 
     const sendMessage = () => {
         let userId = sessionStorage.getItem('userName');
-        socket.emit("message", {userId, text: messageText})
-        setMessageText('');
+
+        if (!userId || !messageText.trim()) {
+            alert("Please enter a valid message.")
+            return;
+        }
+        try {
+            socket.emit("message", {userId, text: messageText})
+            setMessageText('');  
+        } catch(error) {
+            alert(`Could not send message: ${error}`)
+            console.log("An error occurred:", error)
+        }
     };
 
     const handleEnterKey = (e: any) => {

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Socket } from "socket.io-client";
-
 type HomePageProps = {
     socket: Socket;
 }
@@ -13,9 +12,20 @@ const HomePage: React.FC<HomePageProps> = ({socket}) => {
     const handleSubmit = (e: any) => {
         e.preventDefault()
         let userName = e.target.username.value
+        if (userName > 6) {
+            alert("Username must be at least 6 characters long.")
+            return;
+        }
         sessionStorage.setItem('userName', userName)
-        socket.emit('signin')
-        navigate('/chat')
+        try {
+           socket.emit('signin') 
+           navigate('/chat')
+        } catch(error) {
+            alert(`An error occurred during sign-in: ${error}`)
+            console.log("An error occurred:", error)
+            return;
+        }
+
     };
     return (
         <form className="home__container" onSubmit={handleSubmit}>
