@@ -4,10 +4,9 @@ import { Socket } from "socket.io-client";
 
 type SignoutProps = {
     socket: Socket;
-    children?: React.ReactNode;
 }
 
-const Signout: React.FC<SignoutProps> = ({socket, children}) => {
+const Signout: React.FC<SignoutProps> = ({socket}) => {
     const navigate = useNavigate();
     const handleSignout = () => {
         sessionStorage.removeItem('userName')

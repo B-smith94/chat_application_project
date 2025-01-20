@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, Container, ListGroup } from "react-bootstrap";
+import { Card, Container} from "react-bootstrap";
 import { Socket } from "socket.io-client";
 
 type ChatProviderProps = {
