@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { Card, Container } from "react-bootstrap";
+import { Card, Container, ListGroup } from "react-bootstrap";
+import { Socket } from "socket.io-client";
 
 type ChatProviderProps = {
-    socket: any;
+    socket: Socket;
+    filter: string;
 }
 
 type Message = {
@@ -10,7 +12,7 @@ type Message = {
     userId: string;
 }
 
-const ChatProvider: React.FC<ChatProviderProps> = ({ socket }) => {
+const ChatProvider: React.FC<ChatProviderProps> = ({ socket, filter }) => {
     const [messages, setMessages] = useState([] as any);
     const userID = sessionStorage.getItem('userName');
 
@@ -19,6 +21,9 @@ const ChatProvider: React.FC<ChatProviderProps> = ({ socket }) => {
             setMessages([...messages, message]);
         });
     }, [socket, messages, userID]);
+
+    const filteredMessages = filter ? messages.filter((message: Message) => message.userId.toLowerCase().includes(filter.toLowerCase())
+    ) : messages
 
     return (
         <Container
@@ -31,7 +36,7 @@ const ChatProvider: React.FC<ChatProviderProps> = ({ socket }) => {
         >
             <h2>Chat Room</h2>
             <p>Logged in as: {userID}</p>
-            {messages.map((message: Message, index: any) => {
+            {filteredMessages.map((message: Message, index: any) => {
                 const currentdate = new Date();
                 return (
                 <Card key={index} className="mb-2">
@@ -42,6 +47,8 @@ const ChatProvider: React.FC<ChatProviderProps> = ({ socket }) => {
                             {message.userId} - {message.text}
                          </Card.Text>
                          <Card.Text style={{ float: message.userId === userID ? 'right' : 'left'}}>Posted at {currentdate.toLocaleString([], {
+                            month: '2-digit',
+                            day: '2-digit',
                             hour: "2-digit",
                             minute: "2-digit"
                          })}</Card.Text>

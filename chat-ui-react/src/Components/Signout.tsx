@@ -1,8 +1,9 @@
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { Socket } from "socket.io-client";
 
 type SignoutProps = {
-    socket: any;
+    socket: Socket;
     children?: React.ReactNode;
 }
 

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Container, Form } from "react-bootstrap";
+import { Socket } from "socket.io-client";
 
 type MessageInputProps = {
-    socket: any;
+    socket: Socket;
 };
 
 const MessageInput: React.FC<MessageInputProps> = ({ socket }) => {

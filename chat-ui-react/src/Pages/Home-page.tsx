@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { Socket } from "socket.io-client";
 
 type HomePageProps = {
-    socket: any;
+    socket: Socket;
 }
 
 const HomePage: React.FC<HomePageProps> = ({socket}) => {
